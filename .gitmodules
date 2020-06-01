@@ -1,0 +1,3 @@
+[submodule "DEXTR-KerasTensorflow"]
+	path = DEXTR-KerasTensorflow
+	url = https://github.com/scaelles/DEXTR-KerasTensorflow
