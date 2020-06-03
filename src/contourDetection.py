@@ -6,10 +6,10 @@ def detectContours(filepath):
     org = cv2.imread(filepath)
     img = cv2.imread(filepath)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    #blur = cv2.medianBlur(gray, 5)
+    blur = cv2.medianBlur(gray, 1)
     #cv2.imshow("blur", blur)
 
-    ret, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_OTSU)
+    ret, thresh = cv2.threshold(blur, 127, 255, cv2.THRESH_OTSU)
     cv2.imshow("thresh", thresh)
 
     canny = cv2.Canny(thresh, 75, 200)
