@@ -1,3 +1,9 @@
 [submodule "DEXTR-PyTorch"]
 	path = DEXTR-PyTorch
 	url = https://github.com/godonan/DEXTR-PyTorch
+[submodule "SOLO"]
+	path = SOLO
+	url = https://github.com/godonan/SOLO
+[submodule "Mask_RCNN"]
+	path = Mask_RCNN
+	url = https://github.com/matterport/Mask_RCNN
