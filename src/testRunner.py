@@ -54,22 +54,28 @@ def main():
 
     # Take the mask, blur it, and apply corner detection
     maskBlur = cv2.GaussianBlur(mask, (9,9), 0)
-    corners = cornerDetection.detectHarrisCornerGeneric(maskBlur, debug=False)
+    # corners = cornerDetection.detectHarrisCornerGeneric(mask, debug=False)
+    corners = cornerDetection.goodFeatureShiTomasi(mask)
+    print(type(corners))
 
     # Also get new contours while you're at it
-    cv2.imshow("MASK", mask)
-    cv2.waitKey(0)
+    #cv2.imshow("MASK", mask)
+    #cv2.waitKey(0)
     maskContours, maskHierarchy = contourDetection.detectContours(mask, debug=False)
 
-    cv2.drawContours(image, maskContours, -1, (255, 0, 0), 1)
+    #cv2.drawContours(image, maskContours, -1, (255, 0, 0), 1)
     print(type(mask))
     print(type(image))
     # image[corners > 0.01 * corners.max()] = [0, 0, 255]
-    image[corners > 0.1 * corners.max()] = [0, 0, 255]
-    print("Corners extracted")
+    # threshold = 0.1 * corners.max()
+    # image[corners > threshold] = [0, 0, 255]
+    print("Corners Detected: {}".format(corners.size))
 
     # Convert mask to color
     mask = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
+    for i in corners:
+        x, y = i.ravel()
+        cv2.circle(img, (x, y), 3, 255, -1)
 
     #cv2.drawContours(mask, maskContours, -1, (0, 255, 0), -1)
     #cv2.drawContours(image, validContours, -1, (0, 255, 0), -1)
