@@ -5,21 +5,25 @@ import contourDetection
 import cornerDetection
 import matplotlib.pyplot as plt
 
-def mainLoop():
+def main():
+    """
     directory = r'dataset\sample'
     for subdir, dirs, files in os.walk(directory):
         for filename in files:
             filepath = subdir + os.sep + filename
             if filepath.endswith(".tif"):
                 contourDetection.detectContours(filepath)
+    """
 
 
-def main():
+def processing():
     # Do some preprocessing
-    filepath = r'dataset\sample\SS 316 P&C_#1_002.tif'
+    # filepath = r'dataset\sample\SS 316 P&C_#1_002.tif'
+    filepath = r'dataset\sample\800_020.tif'
     img = cv2.imread(filepath)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    blur = cv2.GaussianBlur(gray, (5, 5), 0)
+    #blur = cv2.GaussianBlur(gray, (5, 5), 0)
+    blur = cv2.medianBlur(gray, 10)
     input = blur
     canny = contourDetection.generateCanny(input, alg="MED", debug=False)
     # dilate then erode the canny to close edges
@@ -46,6 +50,14 @@ def main():
         # cv2.waitKey(1)
 
     print("Contour analysis complete.")
+    """
+    maskBGR = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
+    _, alpha = cv2.threshold(mask, 0, 255, cv2.THRESH_BINARY)
+    b, g, r = cv2.split(maskBGR)
+    rgba = [b, g, r, 0.5]
+    maskBGR = cv2.merge(rgba, 4)
+    image = cv2.addWeighted(img, 0.5, maskBGR, 0.5, 0.0)
+    """
 
     image = cv2.bitwise_and(img, img, mask=mask)
     # cv2.drawContours(image, validContours, -1, (0, 255, 0), 1)
@@ -79,6 +91,9 @@ def main():
 
     #cv2.drawContours(mask, maskContours, -1, (0, 255, 0), -1)
     #cv2.drawContours(image, validContours, -1, (0, 255, 0), -1)
+
+    # NUMBER OF CONNECTED COMPONEENTS:
+
 
     cv2.imshow("ORIGINAL", img)
     cv2.imshow("MASK", mask)

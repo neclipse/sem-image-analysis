@@ -9,23 +9,23 @@ options = [_OTSU, _MED, _SAM]
 _SIGMA = 0.33
 
 
-def generateCanny(input, alg="MED", debug=False):
+def generateCanny(input, ROI, alg="MED", debug=False):
     assert alg in options
     canny = None
     if alg == _OTSU:
-        upper, thresh = cv2.threshold(input, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        upper, thresh = cv2.threshold(ROI, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
         lower = 0.5 * upper
         canny = cv2.Canny(input, lower, upper)
         if debug:
             cv2.imshow("thresh", thresh)
     elif alg == _MED:
-        v = np.median(input)
+        v = np.median(ROI)
         lower = int(max(0, (1.0 - _SIGMA) * v))
         upper = int(min(255, (1.0 + _SIGMA) * v))
         canny = cv2.Canny(input, lower, upper)
     elif alg == _SAM:
-        upper = 255
-        lower = 255 * 0.33
+        upper = 255 * 0.75
+        lower = 255 * 0.50
         canny = cv2.Canny(input, lower, upper)
 
     if debug:
