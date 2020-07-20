@@ -2,13 +2,21 @@
 
 """
 import os
-import tkinter
+from tkinter import *
 import cv2
 from tkinter.filedialog import askdirectory
 import numpy as np
 import contourDetection
 
-imgDir = askdirectory(title='Select Folder')
-fileList = os.listdir(imgDir)
-for filename in fileList:
-    continue
+
+def main():
+    imgDir = askdirectory(title='Select Folder')
+    fileList = os.listdir(imgDir)
+    for filename in fileList:
+        window = Tk()
+        window.title("Make necessary Modifications")
+        continue
+
+
+if __name__ == "__main__":
+    main()

@@ -5,6 +5,7 @@ import contourDetection
 import cornerDetection
 import matplotlib.pyplot as plt
 
+
 def main():
     """
     directory = r'dataset\sample'

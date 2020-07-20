@@ -27,7 +27,7 @@ for filename in fileList:
     grayImg = cv2.cvtColor(origImg, cv2.COLOR_BGR2GRAY)
     # ROI = grayImg[0:int(height*.80), 0:width]
     blur = cv2.bilateralFilter(grayImg, d=29, sigmaColor=75, sigmaSpace=75)
-    blur = cv2.medianBlur(blur, 5)
+    # blur = cv2.medianBlur(blur, 5)
     ROI = blur[0:int(height*.80), 0:width]
     canny = contourDetection.generateCanny(blur, ROI=ROI, alg="SAM")
 
@@ -40,6 +40,7 @@ for filename in fileList:
     # Create the mask
     mask = np.ones(origImg.shape[:2], dtype="uint8") * 255
     validContours = []  # List of valid contours
+    print(len(contours))
     for contour in contours:
         approx = cv2.approxPolyDP(
             contour,
